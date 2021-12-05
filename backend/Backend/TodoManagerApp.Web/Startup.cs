@@ -8,7 +8,6 @@ using TodoManagerApp.DAL.Data;
 using TodoManagerApp.DAL.Models;
 using TodoManagerApp.BL;
 
-
 namespace TodoManagerApi
 {
     public class Startup
