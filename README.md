@@ -12,8 +12,6 @@ A frontend egy React technológiára épülő, JavaScript nyelven íródott sing
 
 Új oszlop, illetve teendő felvételére a fejlécen levő `Add new task` és `Add new column` gombokkal, vagy az oszlophoz tartozó `New task` gombbal van lehetőség. Egy oszlop, illetve teendő adatai a hozzájuk tartozó `Edit` gombra kattintva változtathatóak, továbbá a teendő állapotának / oszlopának változtatása is itt lehetséges. A törlésre szintén itt van lehetőség, fontos azonban, hogy egy oszlop törlése az összes benne található teendő törlésével is együtt jár. A teendők egymáshoz képesti sorrendje (prioritása) **drag and drop** módon változtatható.
 
-![A webalkalmazás frontendje] (frontend.jpg)
-
 ## Backend
 A backend ASP.NET Core-on alapul, melyben az adatréteg pedig Entity Framework-re épül. A kódellenőrzésért a beépített NetAnalyzer felel. Az adatrétegben *(DAL projekt)* találhatóak a `Todo` és `Column` osztályok, melyek az adatok leképzéséért felelősek. Itt találhatók továbbá a Models mappában az üzleti logika számára használható úgynevezett model osztályok, melyek könnyű használhatóságát a repository tervezési minta biztosítja. A tényleges adattárolás egy Code First technológiával létrehozott, lokális SQL adatbázisban történik.
 
