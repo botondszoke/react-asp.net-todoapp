@@ -294,6 +294,7 @@ class DataHandler extends React.Component {
                     <Controls
                       addNewTask = {this.addNewTask.bind(this)}
                       addNewColumn = {this.addNewColumn.bind(this)}
+                      first = {columns.length === 0}
                     />
                   }
                 </div>

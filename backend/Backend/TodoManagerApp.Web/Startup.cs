@@ -59,7 +59,11 @@ namespace TodoManagerApi
 
             app.UseRouting();
 
-            
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<DbTaskManagerContext>();
+                context.Database.EnsureCreated();
+            }
 
             app.UseCors();
             app.UseEndpoints(endpoints =>

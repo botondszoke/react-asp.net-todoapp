@@ -22,9 +22,11 @@ function Controls(props) {
                   </Navbar.Brand>
                   <Nav className = "justify-content-end">
                     <ButtonGroup aria-label = "controlButtons">
+                      {!props.first &&
                       <Button variant="dark" className = "simpleBtn" onClick = {() => setModalShowTask(true)}>
                         Add new task
                       </Button>
+                      }
                       <Button variant="dark" className = "simpleBtn" onClick = {() => setModalShowColumn(true)}>
                         Add new column
                       </Button>
@@ -34,6 +36,7 @@ function Controls(props) {
           </Navbar>
         </div>
         <div>
+          {!props.first &&
           <TaskDetails 
               mode = "add"
               show = {modalShowTask}
@@ -46,7 +49,8 @@ function Controls(props) {
                   columnID: ColumnNames.getAll()[0].id,
               }}
               add = {props.addNewTask}
-          /> 
+          />
+          }
           <ColumnDetails
               mode = "add"
               show = {modalShowColumn}
@@ -66,6 +70,7 @@ function Controls(props) {
 Controls.propTypes = {
   addNewTask: PropTypes.func,
   addNewColumn: PropTypes.func,
+  first: PropTypes.bool,
 }
 
 export default Controls;
