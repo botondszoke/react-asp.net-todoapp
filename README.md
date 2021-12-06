@@ -51,10 +51,10 @@ A telepítéshez először le kell klónozni a repositoryt. Ezt követően a fro
 - Amennyiben a számítógépen még nincs telepítve a Node.js, akkor azt telepíteni kell a nodejs.org weboldalról
 - Amennyiben a számítógépen még nincs telepítve a 'react-scripts', akkor azt telepíteni kell a `npm install react-scripts` paranccsal
 
-A Visual Studio solution indításához nem szükséges további csomagok telepítése (tesztelve VS2022 alatt).
-
 Az alkalmazás indításához a backend/Backend/TodoManagerApp.sln-t kell először elindítani, majd futtatni. A sikeres futtatás eredményeként egy console ablak jelenik meg néhány info üzenettel, illetve a korábban említett `http://localhost:5000` címen már tudunk kommunikálni az API-val.
 Ezt követően a frontend/Frontend mappában meg kell nyitni egy parancssort, melyben az `npm start` parancsot kiadva megnyílik a webalkalmazás a `https://localhost:3000` címen.
+
+(Tesztelve VS2022 alatt.)
 
 ## Források
 - A BMEVIAUAC01 (Adatvezérelt rendszerek) tárgyhoz kapcsolódó tanayagok, példaalkalmazások
