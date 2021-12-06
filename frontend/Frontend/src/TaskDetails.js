@@ -18,6 +18,7 @@ class TaskDetails extends React.Component {
         priority: this.props.task.priority,
         columnNames: ColumnNames.getAll(),
         column: ColumnNames.getAll().filter(c => c.id === this.props.task.columnID)[0].name,
+        columnID: this.props.task.columnID,
       }
       this.handleInputChange = this.handleInputChange.bind(this);
       this.handleOpen = this.handleOpen.bind(this);
@@ -32,6 +33,7 @@ class TaskDetails extends React.Component {
         priority: this.props.task.priority,
         columnNames: ColumnNames.getAll(),
         column: ColumnNames.getAll().filter(c => c.id === this.props.task.columnID)[0].name,
+        columnID: this.props.task.columnID,
       });
     }
 
@@ -43,6 +45,7 @@ class TaskDetails extends React.Component {
           deadline: this.props.task.deadline,
           priority: this.props.task.priority,
           column: this.state.columnNames.filter(c => c.id === this.props.task.columnID)[0].name,
+          columnID: this.props.task.columnID,
         });
       }
       this.props.onHide();
@@ -50,9 +53,17 @@ class TaskDetails extends React.Component {
   
     handleInputChange(event) {
       const name = event.target.name;
-      this.setState({
-        [name]: event.target.value,
-      });
+      if (name != "column") {
+        this.setState({
+          [name]: event.target.value,
+        });
+      }
+      else {
+        this.setState({
+          [name]: event.target.value,
+          columnID: this.state.columnNames[event.target.options.selectedIndex].id,
+        })
+      }
     }
   
     render() {
@@ -68,7 +79,8 @@ class TaskDetails extends React.Component {
           description: this.state.description,
           deadline: this.state.deadline,
           priority: this.state.priority,
-          columnID: this.state.columnNames.filter(c => c.name === this.state.column)[0].id,
+          //columnID: this.state.columnNames.filter(c => c.name === this.state.column)[0].id,
+          columnID: this.state.columnID,
         });
       }}
       >
@@ -87,7 +99,8 @@ class TaskDetails extends React.Component {
           description: this.state.description,
           deadline: this.state.deadline,
           priority: this.state.priority,
-          columnID: this.state.columnNames.filter(c => c.name === this.state.column)[0].id,
+          //columnID: this.state.columnNames.filter(c => c.name === this.state.column)[0].id,
+          columnID: this.state.columnID,
         });
       }}
       >
@@ -106,7 +119,8 @@ class TaskDetails extends React.Component {
           description: this.state.description,
           deadline: this.state.deadline,
           priority: this.state.priority,
-          columnID: this.state.columnNames.filter(c => c.name === this.state.column)[0].id,
+          //columnID: this.state.columnNames.filter(c => c.name === this.state.column)[0].id,
+          columnID: this.state.columnID,
         });
       }}
       >
@@ -178,9 +192,15 @@ class TaskDetails extends React.Component {
           onChange = {this.handleInputChange}
           >
             {this.state.columnNames.map(state => {
+              if (state.id === this.state.columnID)
               return (
-                <option key = {state.id} value={state.name}>{state.name}</option>
-              );})
+                <option key={state.id} value={state.name} defaultValue>{state.name}</option>
+              );
+              else
+                return (
+                  <option key={state.id} value={state.name}>{state.name}</option>
+                );
+              })
             }
           </Form.Select>
           </InputGroup>
