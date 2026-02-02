@@ -1,61 +1,46 @@
-# React és ASP.NET Core alapú webalkalmazás
-BME AUT Témalaboratórium - 2021/22/1  
+# React and ASP.NET Core Web Application / React és ASP.NET Core alapú webalkalmazás
+BME AUT Topic Laboratory - 2021/22/1 / BME AUT Témalaboratórium - 2021/22/1  
 Szőke-Milinte Botond - JQ162H   
-Konzulens: Dudás Ákos
+Advisor: Dudás Ákos / Konzulens: Dudás Ákos
 
-## Az alkalmazásról
-Az alkalmazás alapvetően egy letisztult, könnyen használható, teendőkezelő weboldal. Egy oszlop felel meg egy teendőcsoportnak, benne az ehhez az állapothoz tartozó teendők találhatók. A teendő rendelkezik címmel, leírással és határidővel. Mivel **tetszőleges számú oszlop felvehető** tetszőleges névvel, ezért lényegében bármilyen adat tárolható, azok csoportokba rendezhetőek.
+## About the Application / Az alkalmazásról
+**EN**: The application is essentially a clean, easy-to-use todo web app. Each column represents a todo group, containing todos for that specific state. Todos have a title, description, and due date. Since **any number of columns can be created** with custom names, virtually any data can be stored and organized into groups.
 
+**HU**: Az alkalmazás alapvetően egy letisztult, könnyen használható, teendőkezelő weboldal. Egy oszlop felel meg egy teendőcsoportnak, benne az ehhez az állapothoz tartozó teendők találhatók. A teendő rendelkezik címmel, leírással és határidővel. Mivel **tetszőleges számú oszlop felvehető** tetszőleges névvel, ezért lényegében bármilyen adat tárolható, azok csoportokba rendezhetőek.
 
 ## Frontend
-A frontend egy React technológiára épülő, JavaScript nyelven íródott single-page webalkalmazás. Az esztétikus megjelenéshez **React Bootstrap-et használ**. A backendtől az adatokat egy REST API-n keresztül kérdezi le, azokat oszlopokba rendezi, módosítás esetén szintén ezen az API-n keresztül közli a backenddel a szükséges adatokat. A kódellenőrzésért az ESLint felel.
+**EN**: The frontend is a React-based, JavaScript single-page web application. It uses **React Bootstrap** for aesthetic design. Data is fetched from the backend via REST API, organized into columns, and changes are sent back through the same API. ESLint handles code linting. New columns or todos can be added via header buttons (`Add new task`, `Add new column`) or column-specific `New task`. Edit/delete via `Edit` buttons; todo priority via **drag and drop**.
 
-Új oszlop, illetve teendő felvételére a fejlécen levő `Add new task` és `Add new column` gombokkal, vagy az oszlophoz tartozó `New task` gombbal van lehetőség. Egy oszlop, illetve teendő adatai a hozzájuk tartozó `Edit` gombra kattintva változtathatóak, továbbá a teendő állapotának / oszlopának változtatása is itt lehetséges. A törlésre szintén itt van lehetőség, fontos azonban, hogy egy oszlop törlése az összes benne található teendő törlésével is együtt jár. A teendők egymáshoz képesti sorrendje (prioritása) **drag and drop** módon változtatható.
+**HU**: A frontend egy React technológiára épülő, JavaScript nyelven íródott single-page webalkalmazás. Az esztétikus megjelenéshez **React Bootstrap-et használ**. A backendtől az adatokat egy REST API-n keresztül kérdezi le, azokat oszlopokba rendezi, módosítás esetén szintén ezen az API-n keresztül közli a backenddel a szükséges adatokat. A kódellenőrzésért az ESLint felel. Új oszlop, teendő felvételére a fejlécen levő `Add new task` és `Add new column` gombokkal, vagy az oszlophoz tartozó `New task` gombbal. Szerkesztés/törlés az `Edit` gombbal, sorrend **drag and drop**-pal.
 
 ## Backend
-A backend ASP.NET Core-on alapul, melyben az adatréteg pedig Entity Framework-re épül. A kódellenőrzésért a beépített NetAnalyzer felel. Az adatrétegben *(DAL projekt)* találhatóak a `Todo` és `Column` osztályok, melyek az adatok leképzéséért felelősek. Itt találhatók továbbá a Models mappában az üzleti logika számára használható úgynevezett model osztályok, melyek könnyű használhatóságát a repository tervezési minta biztosítja. A tényleges adattárolás egy Code First technológiával létrehozott, lokális SQL adatbázisban történik.
+**EN**: The backend is built on ASP.NET Core with Entity Framework for the data layer. Built-in NetAnalyzer handles code analysis. The data access layer *(DAL project)* contains `Todo` and `Column` classes. Business logic models use repository pattern. Data stored in Code First local SQL database. Business logic layer *(BL project)* ensures priority consistency.
 
-Az adatelérési rétegre épül az üzleti logikai réteg *(BL projekt)*, melynek fő feladata, hogy a teendőkhez (és oszlopokhoz) tartozó prioritások konzisztensek maradjanak, az adatbázisban ne állhasson elő az alkalmazás működése szempontjából inkonzisztens állapot. Az itt található `TodoManager` és `ColumnManager` osztályokat használja fel a WebApi a működéséhez.
+**HU**: A backend ASP.NET Core-on alapul, melyben az adatréteg Entity Framework-re épül. A kódellenőrzésért a beépített NetAnalyzer felel. Az adatrétegben *(DAL projekt)* találhatóak a `Todo` és `Column` osztályok. A Models mappában az üzleti logika model osztályai repository mintával. Code First lokális SQL adatbázisban történő adattárolás. Az üzleti logikai réteg *(BL projekt)* a prioritások konzisztenciáját biztosítja.
 
 ## Test
+**EN**: The *Test project* contains unit tests for business logic using Moq to mock database behavior without real connections. Currently tests new column creation (expandable).
 
-Az üzleti logika teszteléséhez a *Test projektben* található egy teszt osztály, mely unit tesztek végrehajtására képes. Egyelőre csupán egy egyszerű, az új oszlop felvételét tesztelő metódus kapott itt helyet, ez a későbbiekben bővíthető. A metódus a Moq NuGet csomagot használja, így az adatbázis viselkedését csak mockolja, ahhoz valójában nem kapcsolódik.
+**HU**: A *Test projektben* unit tesztek a Moq NuGet csomaggal, adatbázis mockolással. Jelenleg új oszlop létrehozását teszteli (bővíthető).
 
 ## API
+**EN**: REST API at `http://localhost:5000/` handles frontend-backend communication and error reporting.
 
-A frontend és backend közötti kommunikáció egy REST API-n keresztül zajlik *(Web projekt)*, az adatok a http kérések belsejében vannak. Az API felelős azért, hogy tudassa a klienssel az egyes kérések végrehajtása során esetlegesen fellépő hibákat is. A `http://localhost:5000/` címen érhető el, a megfelelő végpontokon keresztül.
+**HU**: REST API a `http://localhost:5000/` címen kezeli a frontend-backend kommunikációt és hibajelzéseket.
 
-Az egyes végpontok a következők:
-- Delete
-  - /api/column/{columnID}/ - adott ID-hoz tartozó oszlop törlése
-  - /api/todo/{todoID}/ - adott ID-hoz tartozó teendő törlése 
+**Endpoints / Végpontok:**
+- **Delete**: `/api/column/{columnID}/`, `/api/todo/{todoID}/`
+- **Get**: `/api/column/`, `/api/column/{columnID}/`, `/api/todo/`, `/api/todo/{todoId}/`
+- **Post**: `/api/column/`, `/api/todo/`
+- **Put**: `/api/column/{columnId}/`, `/api/column/{columnId}/priority`, `/api/todo/{todoId}/`, `/api/todo/{todoId}/priority/`
 
-- Get
-  - /api/column/ - az összes oszlop adatainak lekérdezése
-  - /api/column/{columnID}/ - adott ID-hoz tartozó oszlop adatainak lekérdezése
-  - /api/todo/ - az összes teendő adatainak lekérdezése
-  - /api/todo/{todoId}/ - adott ID-hoz tartozó teendő adatainak lekérdezése
+## Installation / Telepítés
+**EN**: Clone repo → Install Node.js + `npm install react-scripts` → Run `TodoManagerApp.sln` → `npm start` in frontend folder. App at `https://localhost:3000`.
 
-- Post
-  - /api/column/ - új oszlop létrehozása
-  - /api/todo/ - új teendő létrehozása
+**HU**: Repository klónozás → Node.js telepítés + `npm install react-scripts` → `TodoManagerApp.sln` indítás → frontend mappában `npm start`. Alkalmazás: `https://localhost:3000`.
 
-- Put
-  - /api/column/{columnId}/ - adott ID-hoz tartozó oszlop módosítása, a priority attribútum kivételével
-  - /api/column/{columnId}/priority – adott ID-hoz tartozó oszlop priority attribútumának módosítása
-  - /api/todo/{todoId}/ - az adott ID-hoz tartozó teendő módosítása, a priority attribútum kivételével
-  - /api/todo/{todoId}/priority/ - az adott ID-hoz tartozó teendő priority attribútumának módosítása
+*(Tested under VS2022 / VS2022 alatt tesztelve)*
 
-## Telepítés
-A telepítéshez először le kell klónozni a repositoryt. Ezt követően a frontend első futtatásához a következő előzetes műveleteket kell elvégezni:
-- Amennyiben a számítógépen még nincs telepítve a Node.js, akkor azt telepíteni kell a nodejs.org weboldalról
-- Amennyiben a számítógépen még nincs telepítve a 'react-scripts', akkor azt telepíteni kell a `npm install react-scripts` paranccsal
-
-Az alkalmazás indításához a backend/Backend/TodoManagerApp.sln-t kell először elindítani, majd futtatni. A sikeres futtatás eredményeként egy console ablak jelenik meg néhány info üzenettel, illetve a korábban említett `http://localhost:5000` címen már tudunk kommunikálni az API-val.
-Ezt követően a frontend/Frontend mappában meg kell nyitni egy parancssort, melyben az `npm start` parancsot kiadva megnyílik a webalkalmazás a `https://localhost:3000` címen.
-
-(Tesztelve VS2022 alatt.)
-
-## Források
-- A BMEVIAUAC01 (Adatvezérelt rendszerek) tárgyhoz kapcsolódó tanayagok, példaalkalmazások
-- A feladatkiírásban megjelölt vonatkozó források
+## Sources / Források
+**EN**: BMEVIAUAC01 course materials  
+**HU**: BMEVIAUAC01 (Adatvezérelt rendszerek) tananyagok
